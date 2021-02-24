@@ -1,0 +1,180 @@
+body.light {
+  background-color: white;
+  color: #000;
+}
+body.dark {
+  background-color: black;
+  color: #fff;
+}
+table {
+  width: 100%;
+}
+table td,
+table th {
+  padding: 5px;
+}
+table th {
+  background-color: #bcbcbc;
+}
+table tr {
+  border: 1px solid #bcbcbc;
+}
+table tr td button {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+table tr td img {
+  max-width: 100px;
+}
+h1 {
+  width: 100%;
+  text-align: center;
+}
+form {
+  max-width: 450px;
+  margin: 20px auto;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  padding: 20px;
+}
+form p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+form input {
+  width: 100%;
+  max-width: 260px;
+}
+form input[type="button"] {
+  margin: 0 auto;
+}
+form input[type="checkbox"] {
+  width: 20px;
+}
+form select {
+  padding: 10px;
+}
+form #error {
+  color: red;
+}
+a {
+  cursor: pointer;
+}
+footer {
+  width: 100%;
+  background-color: white;
+}
+#myChart {
+  max-width: 300px;
+  max-height: 300px;
+  margin: 0 auto;
+}
+
+#colors-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background-image: -webkit-gradient(
+    linear,
+    0 50%,
+    100% 50%,
+    color-stop(0, #e75239),
+    color-stop(12.5%, #e75239),
+    color-stop(12.5%, #ff961c),
+    color-stop(25%, #ff961c),
+    color-stop(25%, #ffcc27),
+    color-stop(37.5%, #ffcc27),
+    color-stop(37.5%, #fce62f),
+    color-stop(50%, #fce62f),
+    color-stop(50%, #cde35b),
+    color-stop(62.5%, #cde35b),
+    color-stop(62.5%, #82cc33),
+    color-stop(75%, #82cc33),
+    color-stop(75%, #41bece),
+    color-stop(87.5%, #41bece),
+    color-stop(87.5%, #049cdb),
+    color-stop(100%, #049cdb)
+  );
+  background-image: -moz-gradient(
+    linear,
+    0 50%,
+    100% 50%,
+    color-stop(0, #e75239),
+    color-stop(12.5%, #e75239),
+    color-stop(12.5%, #ff961c),
+    color-stop(25%, #ff961c),
+    color-stop(25%, #ffcc27),
+    color-stop(37.5%, #ffcc27),
+    color-stop(37.5%, #fce62f),
+    color-stop(50%, #fce62f),
+    color-stop(50%, #cde35b),
+    color-stop(62.5%, #cde35b),
+    color-stop(62.5%, #82cc33),
+    color-stop(75%, #82cc33),
+    color-stop(75%, #41bece),
+    color-stop(87.5%, #41bece),
+    color-stop(87.5%, #049cdb),
+    color-stop(100%, #049cdb)
+  );
+  background-image: gradient(
+    linear,
+    0 50%,
+    100% 50%,
+    color-stop(0, #e75239),
+    color-stop(12.5%, #e75239),
+    color-stop(12.5%, #ff961c),
+    color-stop(25%, #ff961c),
+    color-stop(25%, #ffcc27),
+    color-stop(37.5%, #ffcc27),
+    color-stop(37.5%, #fce62f),
+    color-stop(50%, #fce62f),
+    color-stop(50%, #cde35b),
+    color-stop(62.5%, #cde35b),
+    color-stop(62.5%, #82cc33),
+    color-stop(75%, #82cc33),
+    color-stop(75%, #41bece),
+    color-stop(87.5%, #41bece),
+    color-stop(87.5%, #049cdb),
+    color-stop(100%, #049cdb)
+  );
+  -webkit-animation: colorsanimation 15s linear 0s infinite;
+  animation: colorsanimation 15s linear 0s infinite;
+}
+
+@-webkit-keyframes colorsanimation {
+  from {
+    background-position: 0 bottom;
+  }
+  to {
+    background-position: 1600px bottom;
+  }
+}
+
+@keyframes headercolors {
+  from {
+    background-position: 0 bottom;
+  }
+  to {
+    background-position: 1600px bottom;
+  }
+}
+
+.sticky {
+  z-index: 2000;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: white;
+}
+
+.min_height {
+  min-height: 100vh;
+}

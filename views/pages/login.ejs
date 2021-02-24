@@ -1,0 +1,76 @@
+
+<script>
+    function login() {
+        const form = document.getElementById("loginForm");
+        fetch("/api/users/login", {
+            method: "POST",
+            body: JSON.stringify({
+                email: form[0].value,
+                password: form[1].value,
+                rememberme: form[2].checked
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const error = document.getElementById("error");
+                if (data.error) {
+                    error.innerText = data.error;
+                } else {
+                    error.innerText = '';
+                }
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    window.location = '/welcome';
+                }
+                if (data.changePassword) {
+                    window.location = '/password';
+                }
+            });
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ('../components/head') %>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form id="loginForm">
+                <h1>Login</h1>
+                <p>
+                    <label>Email:</label>
+                    <input type="email" name="email">
+                </p>
+                <p>
+                    <label>Password:</label>
+                    <input type="password" name="password">
+                </p>
+                <p>
+                    <div>
+                        <input type="checkbox" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                </p>
+                <p>
+                    <input type="button" value="Login" onclick="login()" />
+                </p>
+                <p id="error"></p>
+                <a href="/register">Register?</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <%- include ('../components/footer') %>
+</footer>
+
+</body>
+</html>

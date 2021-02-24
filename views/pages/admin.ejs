@@ -1,0 +1,167 @@
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+  function addProduct() {
+    const form = document.getElementById("productForm");
+    fetch("/api/products/add", {
+      method: "POST",
+      body: JSON.stringify({
+        name: form[0].value,
+        price: form[1].value,
+        picture: form[2].value
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer "+ localStorage.getItem('token')
+      },
+    }).then((response) => {
+      if(response.ok) {
+        location.reload();
+      }
+    });
+  }
+  function saveProduct(id) {
+    const form = document.getElementById(id);
+    fetch("/api/products/update", {
+      method: "POST",
+      body: JSON.stringify({
+        product: {
+          id: id,
+          picture: form[0].value,
+          name: form[1].value,
+          price: form[2].value
+        }
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer "+ localStorage.getItem('token')
+      },
+    }).then((response) => {
+      if(response.ok) {
+        location.reload();
+      }
+    });
+  }
+  function removeProduct(id) {
+    fetch("/api/products/delete", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer "+ localStorage.getItem('token')
+      },
+    }).then((response) => {
+      if(response.ok) {
+        location.reload();
+      }
+    });
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ('../components/head') %>
+  </head>
+  <body class="<%= data.user.view %>">
+    <div class="sticky">
+    <%- include('../components/navbar', {user: data.user}); %>
+  </div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>Admin page for <%- data.user.firstName %></h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <form id="productForm">
+            <h3>Add product</h3>
+            <p>
+              <label>Name:</label>
+              <input type="text" name="name">
+            </p>
+            <p>
+              <label>Price:</label>
+              <input type="number" name="price">
+            </p>
+            <p>
+              <label>Picture:</label>
+              <input type="text" name="picture">
+            </p>
+            <p>
+              <input type="button" value="Add" onclick="addProduct()" />
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <table>
+            <tr>
+              <th>Picture</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Save Changes</th>
+              <th>Delete Item</th>
+            </tr>
+            <% for(var i=0; i < products.length; i++) { %>
+              <form id="<%= products[i].id %>">
+                <tr>
+                  <td>
+                    <input type="text" value="<%= products[i].picture %>"/>
+                  </td>
+                  <td>
+                    <input type="text" value="<%= products[i].name %>"/>
+                  </td>
+                  <td>
+                    <input type="text" value="<%= products[i].price %>"/></td>
+                  </td>
+                  <td>
+                    <a onclick="saveProduct('<%= products[i].id %>')">Save</a>
+                  </td>
+                  <td>
+                    <a onclick="removeProduct('<%= products[i].id %>')">Delete</a>
+                  </td>
+                </tr>
+              </form>
+            <% } %>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <canvas id="myChart" width="200" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ctx = document.getElementById('myChart');
+      const labels = '<%= products.map((product) => product.name) %>';
+      const data = '<%= products.map((product) => product.price) %>';
+      const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels.split(','),
+          datasets: [{
+            label: 'Prices',
+            data: data.split(','),
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+          }]
+        }
+      });
+    </script>
+    <footer><%- include ('../components/footer') %></footer>
+  </body>
+</html>

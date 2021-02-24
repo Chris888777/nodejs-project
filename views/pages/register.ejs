@@ -1,0 +1,82 @@
+
+<script>
+    function register() {
+        const form = document.getElementById("registerForm");
+        fetch("/api/users/register", {
+            method: "POST",
+            body: JSON.stringify({
+                firstName: form[0].value,
+                lastName: form[1].value,
+                email: form[2].value,
+                password: form[3].value,
+                view: form[4].value
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const error = document.getElementById("error");
+                if (data.error) {
+                    error.innerText = data.error;
+                } else {
+                    error.innerText = '';
+                    localStorage.setItem('token', data.token);
+                    window.location = '/welcome';
+                }
+            });
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ('../components/head') %>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form id="registerForm">
+                <h1>Register</h1>
+                <p>
+                    <label>First name:</label>
+                    <input type="text" name="firstName">
+                </p>
+                <p>
+                    <label>Last name:</label>
+                    <input type="text" name="lastName">
+                </p>
+                <p>
+                    <label>Email:</label>
+                    <input type="text" name="email">
+                </p>
+                <p>
+                    <label>Password:</label>
+                    <input type="password" name="password">
+                    <h6>Password must contain digits, uppercase and lowercase letters, and between 4 to 10 characters long</h6>
+                </p>
+                <p>
+                    <label>View:</label>
+                    <select type="text" name="view">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="button" value="Register" onclick="register()" />
+                </p>
+                <p id="error"></p>
+                <a href="/login">Login?</a>
+            </form>
+        </div>
+    </div>
+</div>
+<footer>
+    <%- include ('../components/footer') %>
+</footer>
+
+</body>
+</html>

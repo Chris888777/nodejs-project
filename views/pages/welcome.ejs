@@ -1,0 +1,56 @@
+
+<script>
+  function addcart(id, user_id) {
+    fetch("/api/cart", {
+      method: "POST",
+      body: JSON.stringify({ id, user_id }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer "+ localStorage.getItem('token'),
+      },
+    });
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ('../components/head') %>
+  </head>
+  <body class="<%= data.user.view %>">
+<div class="sticky">
+    <%- include('../components/navbar', {user: data.user}); %>
+</div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>Welcome, <%- data.user.firstName %></h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <table>
+            <tr>
+              <th>Picture</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Add to cart</th>
+            </tr>
+            <% for(var i=0; i < products.length; i++) { %>
+            <tr>
+              <td><img src="<%= products[i].picture %>" /></td>
+              <td><%= products[i].name %></td>
+              <td><%= products[i].price %></td>
+              <td>
+                <button onclick="addcart('<%= products[i].id %>', '<%= data.user.id %>')">&#10004;</button>
+              </td>
+            </tr>
+            <% } %>
+          </table>
+        </div>
+      </div>
+    </div>
+    <footer><%- include ('../components/footer') %></footer>
+  </body>
+</html>

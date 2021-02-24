@@ -1,0 +1,62 @@
+
+<script>
+    function remove(id){
+        fetch('/api/cart', {
+            method: 'DELETE',
+            body: JSON.stringify({ id }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer "+ localStorage.getItem('token'),
+            }
+        })
+            .then((response) => {
+                if(response.ok) {
+                    location.reload();
+                }
+                throw new Error('Request failed.');
+            });
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ('../components/head') %>
+</head>
+<body class="<%= data.user.view %>">
+    <div class="sticky">
+        <%- include('../components/navbar', {user: data.user}); %>
+    </div>
+
+<div class="container min_height">
+    <div class="row">
+        <div class="col">
+            <h1>Cart</h1>
+            (<%= total %>$)
+        </div>
+    </div>
+
+    <div class="row">
+        <table>
+            <tr>
+                <th>Picture</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Remove</th>
+            </tr>
+            <% for(var i=0; i < cart.length; i++) { %>
+                <tr>
+                    <td><img src="<%= cart[i].picture %>" /></td>
+                    <td><%= cart[i].name %></td>
+                    <td><%= cart[i].price %></td>
+                    <td><button onclick="remove('<%= cart[i].id %>')">&#10006;</button></td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
+</div>
+<footer>
+    <%- include ('../components/footer') %>
+</footer>
+</body>
+</html>
